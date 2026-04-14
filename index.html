@@ -12,8 +12,6 @@
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 a{color:var(--accent2);text-decoration:none}
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
-
-/* Nav */
 nav{position:fixed;top:0;width:100%;z-index:100;padding:20px 0;transition:background .3s;backdrop-filter:blur(20px);background:rgba(6,6,15,0.8);border-bottom:1px solid var(--border)}
 nav .container{display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#a855f7,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -22,8 +20,6 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .nav-links a:hover{color:#fff}
 .nav-cta{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff!important;padding:10px 24px;border-radius:10px;font-weight:600;transition:transform .2s,box-shadow .2s}
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,0.3)}
-
-/* Hero */
 .hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;background:radial-gradient(ellipse at 30% 0%,rgba(124,58,237,0.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 100%,rgba(168,85,247,0.06) 0%,transparent 50%)}
 .hero .container{display:flex;align-items:center;gap:60px}
 .hero-text{flex:1}
@@ -42,56 +38,54 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .hero-photo img{width:320px;height:320px;object-fit:cover;border-radius:24px;border:2px solid rgba(124,58,237,0.2)}
 .hero-photo::before{content:'';position:absolute;inset:-4px;border-radius:28px;background:linear-gradient(135deg,#7c3aed,#a855f7,#6366f1);z-index:-1;opacity:.3}
 .hero-photo::after{content:'';position:absolute;width:100%;height:100%;top:16px;left:16px;border-radius:24px;border:1px solid rgba(124,58,237,0.15);z-index:-2}
-
-/* Stats */
 .stats{padding:40px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .stats .container{display:flex;justify-content:center;gap:64px}
 .stat{text-align:center}
 .stat h3{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#a855f7,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .stat p{color:var(--muted);font-size:.85rem;margin-top:4px}
-
-/* Section */
 section{padding:100px 0}
 .section-label{display:inline-block;background:var(--glow);border:1px solid rgba(124,58,237,0.2);padding:6px 16px;border-radius:16px;font-size:.78rem;color:var(--accent2);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
 .section-title{font-size:2.2rem;font-weight:800;margin-bottom:16px}
 .section-desc{color:var(--muted);font-size:1.05rem;max-width:550px;line-height:1.7}
-
-/* Services */
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
-.service-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;transition:all .3s;position:relative;overflow:hidden}
+.service-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;transition:all .3s;position:relative;overflow:hidden;cursor:pointer}
 .service-card:hover{border-color:rgba(124,58,237,0.3);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.3)}
 .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
 .service-card:hover::before{opacity:1}
 .service-icon{width:52px;height:52px;border-radius:14px;background:var(--glow);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
 .service-card h3{font-size:1.1rem;font-weight:700;margin-bottom:10px}
 .service-card p{color:var(--muted);font-size:.88rem;line-height:1.6}
-
-/* Process */
+.card-link{color:var(--accent2);font-size:.82rem;font-weight:600;margin-top:12px;display:inline-block;transition:transform .2s}
+.service-card:hover .card-link{transform:translateX(4px)}
 .process-steps{display:flex;gap:24px;margin-top:48px;counter-reset:step}
 .step{flex:1;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 24px;position:relative;text-align:center}
 .step::before{counter-increment:step;content:counter(step);position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:32px;height:32px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff}
 .step h3{font-size:1rem;font-weight:700;margin:12px 0 8px}
 .step p{color:var(--muted);font-size:.85rem;line-height:1.5}
-
-/* CTA */
 .cta-section{text-align:center;padding:100px 0}
 .cta-box{background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(168,85,247,0.05));border:1px solid rgba(124,58,237,0.2);border-radius:28px;padding:64px 40px;max-width:700px;margin:0 auto}
 .cta-box h2{font-size:2rem;font-weight:800;margin-bottom:16px}
 .cta-box p{color:var(--muted);margin-bottom:32px;font-size:1.05rem}
 .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-
-/* Footer */
 footer{border-top:1px solid var(--border);padding:40px 0;text-align:center}
 footer p{color:var(--muted);font-size:.85rem}
 footer .socials{display:flex;gap:20px;justify-content:center;margin-bottom:16px}
 footer .socials a{color:var(--muted);font-size:1.2rem;transition:color .2s}
 footer .socials a:hover{color:var(--accent2)}
-
-/* Animations */
 .fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
 .fade-in.visible{opacity:1;transform:translateY(0)}
-
-/* Responsive */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.active{display:flex}
+.modal-box{background:#0f0f1a;border:1px solid rgba(124,58,237,0.2);border-radius:24px;max-width:560px;width:100%;padding:40px;position:relative;animation:modalIn .3s ease;max-height:90vh;overflow-y:auto}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--muted);font-size:1.5rem;cursor:pointer}
+.modal-close:hover{color:#fff}
+.modal-icon{font-size:2.5rem;margin-bottom:16px}
+.modal-box h2{font-size:1.5rem;font-weight:700;margin-bottom:12px}
+.modal-box p{color:var(--muted);line-height:1.7;margin-bottom:20px}
+.modal-features{list-style:none;margin-bottom:24px}
+.modal-features li{padding:8px 0;color:var(--text);font-size:.9rem;border-bottom:1px solid var(--border)}
+.modal-features li::before{content:'✅ ';margin-right:8px}
 @media(max-width:768px){
 .hero .container{flex-direction:column-reverse;text-align:center}
 .hero h1{font-size:2.2rem}
@@ -102,6 +96,7 @@ footer .socials a:hover{color:var(--accent2)}
 .process-steps{flex-direction:column}
 .stats .container{flex-wrap:wrap;gap:32px}
 .nav-links{display:none}
+.modal-box{padding:24px;margin:12px}
 }
 </style>
 </head>
@@ -150,35 +145,41 @@ footer .socials a:hover{color:var(--accent2)}
 <h2 class="section-title">AI-Powered Solutions for Every Business</h2>
 <p class="section-desc">From lead capture to appointment booking — we automate the boring stuff so you can focus on growing.</p>
 <div class="services-grid">
-<div class="service-card fade-in">
+<div class="service-card fade-in" onclick="openModal(0)">
 <div class="service-icon">🤖</div>
 <h3>AI Sales Chatbot</h3>
 <p>24/7 AI assistant on your website that talks to visitors, understands their needs, qualifies them, and books calls — automatically.</p>
+<span class="card-link">Learn More →</span>
 </div>
-<div class="service-card fade-in">
+<div class="service-card fade-in" onclick="openModal(1)">
 <div class="service-icon">🎯</div>
 <h3>Lead Qualification & Scoring</h3>
 <p>AI analyzes every lead, assigns a quality score, categorizes them as Hot/Warm/Cold, and sends you instant alerts for hot leads.</p>
+<span class="card-link">Learn More →</span>
 </div>
-<div class="service-card fade-in">
+<div class="service-card fade-in" onclick="openModal(2)">
 <div class="service-icon">📅</div>
 <h3>Appointment Booking</h3>
 <p>Automated scheduling system that lets qualified leads book directly on your calendar. No back-and-forth needed.</p>
+<span class="card-link">Learn More →</span>
 </div>
-<div class="service-card fade-in">
+<div class="service-card fade-in" onclick="openModal(3)">
 <div class="service-icon">📧</div>
 <h3>Email Follow-Up Automation</h3>
 <p>Personalized follow-up emails sent automatically to new leads. Never lose a prospect to slow response times again.</p>
+<span class="card-link">Learn More →</span>
 </div>
-<div class="service-card fade-in">
+<div class="service-card fade-in" onclick="openModal(4)">
 <div class="service-icon">📊</div>
 <h3>Smart CRM & Dashboard</h3>
 <p>All your leads, scores, and interactions organized in one place. Know exactly where every opportunity stands.</p>
+<span class="card-link">Learn More →</span>
 </div>
-<div class="service-card fade-in">
+<div class="service-card fade-in" onclick="openModal(5)">
 <div class="service-icon">⚡</div>
 <h3>Custom AI Workflows</h3>
 <p>Got a repetitive task eating your time? We'll build a custom AI workflow to handle it automatically.</p>
+<span class="card-link">Learn More →</span>
 </div>
 </div>
 </div>
@@ -221,11 +222,31 @@ footer .socials a:hover{color:var(--accent2)}
 </div>
 </footer>
 
+<div class="modal-overlay" id="serviceModal" onclick="if(event.target===this)closeModal()">
+<div class="modal-box">
+<button class="modal-close" onclick="closeModal()">✕</button>
+<div class="modal-icon" id="modalIcon"></div>
+<h2 id="modalTitle"></h2>
+<p id="modalDesc"></p>
+<ul class="modal-features" id="modalFeatures"></ul>
+<a href="https://calendly.com/newera7078/30min" target="_blank" class="btn-primary" style="width:100%;justify-content:center">📅 Book Free Discovery Call</a>
+</div>
+</div>
+
 <script>
-const obs = new IntersectionObserver((entries) => {
-entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, {threshold: 0.15});
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+const services=[
+{icon:'🤖',title:'AI Sales Chatbot',desc:'A smart AI assistant that lives on your website 24/7. It greets visitors, asks the right questions, qualifies leads, and even books appointments — all without any human intervention.',features:['24/7 automated lead conversations','Smart lead qualification','Instant Calendly booking integration','Real-time owner email notifications','All leads saved to Google Sheets','Custom personality and branding']},
+{icon:'🎯',title:'Lead Qualification & Scoring',desc:'Stop wasting time on unqualified leads. Our AI analyzes every submission, assigns a quality score from 1 to 10, and categorizes them so you focus only on the hottest opportunities.',features:['AI-powered lead scoring 1 to 10','Hot, Warm, Cold categorization','Instant email alerts for hot leads','Detailed AI summary for each lead','Google Sheets CRM integration','Custom scoring criteria']},
+{icon:'📅',title:'Appointment Booking Automation',desc:'Eliminate the back-and-forth of scheduling. Qualified leads automatically receive a booking link and can schedule directly on your calendar.',features:['Calendly and Cal.com integration','Only qualified leads can book','Automatic confirmation emails','Calendar sync with Google and Outlook','Custom availability settings','No-show reminder automation']},
+{icon:'📧',title:'Email Follow-Up Automation',desc:'Never lose a lead to slow response times. Automated, personalized follow-up emails are sent instantly when a new lead comes in.',features:['Instant auto-reply to new leads','Personalized email templates','Follow-up sequences Day 1, 3, 7','Smart personalization with AI','Professional HTML email design','Open and click tracking']},
+{icon:'📊',title:'Smart CRM & Dashboard',desc:'All your leads, scores, conversations, and appointments organized in one powerful dashboard. Know exactly where every opportunity stands.',features:['Centralized lead database','Lead status tracking','Conversation history','Performance analytics','Google Sheets powered and free','Export and reporting tools']},
+{icon:'⚡',title:'Custom AI Workflows',desc:'Got a unique business process that eats your time? We build custom AI-powered automations tailored to your exact needs.',features:['Custom workflow design','API integrations','Data processing automation','Report generation','Social media automation','Invoice and billing automation']}
+];
+function openModal(i){const s=services[i];document.getElementById('modalIcon').textContent=s.icon;document.getElementById('modalTitle').textContent=s.title;document.getElementById('modalDesc').textContent=s.desc;const f=document.getElementById('modalFeatures');f.innerHTML='';s.features.forEach(x=>{const li=document.createElement('li');li.textContent=x;f.appendChild(li)});document.getElementById('serviceModal').classList.add('active');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('serviceModal').classList.remove('active');document.body.style.overflow=''}
 </script>
 </body>
 </html>
