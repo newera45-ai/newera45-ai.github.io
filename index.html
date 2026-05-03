@@ -533,16 +533,21 @@ body::before{
   .nl, .ncta { display: none; }
   .logo { font-size: 20px; }
   
-  #sh { padding-top: 100px; padding-bottom: 60px; }
-  .h-title { font-size: clamp(42px, 12vw, 56px); line-height: 1.05; max-width: 100%; }
-  .h-sub { font-size: 14px; max-width: 100%; }
-  .h-photo { display: none; }
-  .h-act { flex-direction: column; align-items: flex-start; gap: 16px; }
+  #sh { padding-top: 80px; padding-bottom: 40px; }
+  .h-title { font-size: clamp(38px, 12vw, 48px); line-height: 1.1; max-width: 100%; margin-bottom: 20px; }
+  .h-sub { font-size: 14px; max-width: 100%; line-height: 1.6; }
+  .h-photo { 
+    position: relative; top: auto; right: auto; transform: none; 
+    margin-top: 40px; display: block; z-index: 2; 
+  }
+  .h-photo .fi { width: 100%; max-width: 300px; height: 380px; margin: 0 auto; }
+  .h-act { flex-direction: column; align-items: stretch; gap: 16px; margin-top: 30px; }
+  .btn-p { text-align: center; }
   
-  .bento { grid-template-columns: 1fr; }
-  .p-grid { grid-template-columns: 1fr; }
-  .rev-grid { grid-template-columns: 1fr; }
-  .sg { grid-template-columns: repeat(2, 1fr); }
+  .bento { grid-template-columns: 1fr; gap: 12px; }
+  .p-grid { grid-template-columns: 1fr; gap: 12px; }
+  .rev-grid { grid-template-columns: 1fr; gap: 12px; }
+  .sg { grid-template-columns: 1fr 1fr; gap: 20px 0; }
   .si { border-right: none; border-bottom: 1px solid rgba(139,92,246,.1); padding: 24px 0; }
   .sn { font-size: 40px; }
   
@@ -632,7 +637,7 @@ body::before{
     </div>
     <div class="s-hint el">SCROLL TO EXPLORE</div>
     <div class="h-photo el">
-      <div class="fi"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Founder Photo" style="width:100%;height:100%;object-fit:cover;opacity:0.85;filter:grayscale(100%) sepia(20%) hue-rotate(220deg);"></div>
+      <div class="fi"><img src="me.jpg" alt="Founder Photo" style="width:100%;height:100%;object-fit:cover;border-radius:2px;"></div>
     </div>
   </div>
 </section>
@@ -950,19 +955,18 @@ function updateScenes(p){
     s.style.opacity=op;
     s.style.pointerEvents=op>.1?'all':'none';
 
-    // 3D scene transform
     const inner = s.querySelector('.scene-3d');
     if(inner && p>=a && p<=b){
       const r=b-a, local=(p-a)/r;
       let tz=0, rx=0;
       if(local<.2){
         const t=local/.2;
-        tz = -400*(1-t);
-        rx = 4*(1-t);
+        tz = innerWidth < 800 ? -100*(1-t) : -400*(1-t);
+        rx = innerWidth < 800 ? 1*(1-t) : 4*(1-t);
       } else if(local>.8){
         const t=(local-.8)/.2;
-        tz = 150*t;
-        rx = -3*t;
+        tz = innerWidth < 800 ? 40*t : 150*t;
+        rx = innerWidth < 800 ? -1*t : -3*t;
       }
       inner.style.transform = `translateZ(${tz}px) rotateX(${rx}deg)`;
     }
