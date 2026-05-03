@@ -527,6 +527,41 @@ body::before{
   content:'✓';color:var(--p2);font-weight:700;font-size:14px;
 }
 
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 800px) {
+  nav { padding: 16px 24px; }
+  .nl, .ncta { display: none; }
+  .logo { font-size: 20px; }
+  
+  #sh { padding-top: 100px; padding-bottom: 60px; }
+  .h-title { font-size: clamp(42px, 12vw, 56px); line-height: 1.05; max-width: 100%; }
+  .h-sub { font-size: 14px; max-width: 100%; }
+  .h-photo { display: none; }
+  .h-act { flex-direction: column; align-items: flex-start; gap: 16px; }
+  
+  .bento { grid-template-columns: 1fr; }
+  .p-grid { grid-template-columns: 1fr; }
+  .rev-grid { grid-template-columns: 1fr; }
+  .sg { grid-template-columns: repeat(2, 1fr); }
+  .si { border-right: none; border-bottom: 1px solid rgba(139,92,246,.1); padding: 24px 0; }
+  .sn { font-size: 40px; }
+  
+  .fnd-layout { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .fn { font-size: 32px; }
+  
+  .cta-t { font-size: clamp(48px, 15vw, 68px); }
+  .cta-ftr { position: static; flex-direction: column; gap: 16px; margin-top: 40px; }
+  
+  #dm { display: none; }
+  
+  .modal-box { padding: 24px; width: 92%; }
+  .modal-title { font-size: 18px; }
+  .modal-icon { font-size: 28px; }
+  .modal-close { top: 12px; right: 16px; }
+  
+  body { overflow-x: hidden; width: 100%; }
+}
+
 </style>
 </head>
 <body>
@@ -597,7 +632,7 @@ body::before{
     </div>
     <div class="s-hint el">SCROLL TO EXPLORE</div>
     <div class="h-photo el">
-      <div class="fi"><div class="fi-ph">K</div></div>
+      <div class="fi"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Founder Photo" style="width:100%;height:100%;object-fit:cover;opacity:0.85;filter:grayscale(100%) sepia(20%) hue-rotate(220deg);"></div>
     </div>
   </div>
 </section>
