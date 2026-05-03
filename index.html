@@ -3,584 +3,271 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Newera — AI Automation Agency | Transform Your Business</title>
-<meta name="description" content="Newera builds AI-powered automation systems that help businesses capture leads, book appointments, and grow on autopilot.">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
---bg:#050508;--bg2:#08090e;--bg3:#0c0d14;
---surface:rgba(255,255,255,.02);--surface2:rgba(255,255,255,.04);--surface3:rgba(255,255,255,.06);
---border:rgba(255,255,255,.05);--border2:rgba(255,255,255,.08);
---text:#f0f0f5;--text2:#c8c9d2;--muted:#7d7f8c;--dim:#52535e;
---violet:#8b5cf6;--violet2:#a78bfa;--violet3:#6d28d9;
---indigo:#6366f1;--cyan:#22d3ee;--emerald:#34d399;
---glow:rgba(139,92,246,.08);--glow2:rgba(139,92,246,.15);
-}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text2);overflow-x:hidden;line-height:1.6}
-a{color:inherit;text-decoration:none}
-::selection{background:rgba(139,92,246,.3);color:#fff}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(139,92,246,.2);border-radius:10px}
-
-/* --- NOISE OVERLAY --- */
-body::before{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.025;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-/* --- LOADER --- */
-.loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;transition:opacity .8s cubic-bezier(.4,0,0,1),visibility .8s}
-.loader.done{opacity:0;visibility:hidden}
-.loader-bar{width:120px;height:2px;background:var(--border);border-radius:2px;overflow:hidden}
-.loader-bar span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:2px;animation:loadBar 1.2s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes loadBar{to{width:100%}}
-.loader-text{font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--dim);font-weight:500}
-
-/* --- SCROLL PROGRESS --- */
-.scroll-line{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--indigo),var(--cyan));z-index:1001;width:0;transition:width .05s}
-
-/* --- CURSOR --- */
-.cursor-dot{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.06) 0%,transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);will-change:left,top}
-
-/* --- CONTAINER --- */
-.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
-
-/* --- NAV --- */
-.nav{position:fixed;top:0;width:100%;z-index:100;transition:all .5s cubic-bezier(.4,0,.2,1)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;justify-content:space-between;height:72px}
-.nav.scrolled{background:rgba(5,5,8,.85);backdrop-filter:blur(24px) saturate(1.2);border-bottom:1px solid var(--border)}
-.logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;color:var(--text)}
-.logo-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--violet),var(--indigo));display:grid;place-items:center;font-size:15px;box-shadow:0 4px 16px rgba(139,92,246,.25)}
-.nav-menu{display:flex;align-items:center;gap:40px;list-style:none}
-.nav-menu a{font-size:.82rem;font-weight:500;color:var(--muted);letter-spacing:.3px;transition:color .3s}
-.nav-menu a:hover{color:var(--text)}
-.nav-btn{background:var(--surface3);color:var(--text)!important;padding:9px 22px;border-radius:10px;border:1px solid var(--border2);font-weight:600;transition:all .4s cubic-bezier(.4,0,.2,1)}
-.nav-btn:hover{background:var(--violet);border-color:var(--violet);box-shadow:0 8px 32px rgba(139,92,246,.25);transform:translateY(-1px)}
-.burger{display:none;width:20px;height:14px;position:relative;cursor:pointer;z-index:101}
-.burger span{display:block;width:100%;height:1.5px;background:var(--text);position:absolute;transition:all .3s;border-radius:2px}
-.burger span:nth-child(1){top:0}.burger span:nth-child(2){top:6px}.burger span:nth-child(3){top:12px}
-.burger.open span:nth-child(1){transform:rotate(45deg);top:6px}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:rotate(-45deg);top:6px}
-.mob-nav{position:fixed;inset:0;background:rgba(5,5,8,.96);backdrop-filter:blur(32px);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;opacity:0;visibility:hidden;transition:all .4s}
-.mob-nav.open{opacity:1;visibility:visible}
-.mob-nav a{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:600;color:var(--text2);transition:color .3s}
-.mob-nav a:hover{color:var(--violet2)}
-
-/* --- HERO --- */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:140px 0 100px}
-.hero-bg-grid{position:absolute;inset:0;background-image:
-  linear-gradient(rgba(139,92,246,.03) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(139,92,246,.03) 1px,transparent 1px);
-background-size:80px 80px;
-mask-image:radial-gradient(ellipse 60% 50% at 50% 40%,black,transparent)}
-.hero-glow1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.1),transparent 65%);top:-15%;left:-10%;animation:drift 12s ease-in-out infinite}
-.hero-glow2{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.07),transparent 65%);bottom:0;right:-5%;animation:drift 10s ease-in-out infinite reverse}
-@keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(20px,-15px)}66%{transform:translate(-10px,20px)}}
-
-.hero .wrap{display:grid;grid-template-columns:1fr .85fr;gap:80px;align-items:center;position:relative;z-index:2}
-.hero-overline{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
-.hero-overline .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);box-shadow:0 0 10px rgba(52,211,153,.5);animation:pulse 2.5s ease infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-.hero h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(3rem,5.5vw,4.5rem);font-weight:400;line-height:1.08;color:var(--text);margin-bottom:28px;letter-spacing:-.02em}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:1.05rem;color:var(--muted);line-height:1.75;max-width:440px;margin-bottom:44px;font-weight:400}
-.hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-
-/* Premium Buttons */
-.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:14px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:all .45s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-.btn-fill{background:var(--violet);color:#fff;box-shadow:0 4px 20px rgba(139,92,246,.2),inset 0 1px 0 rgba(255,255,255,.1)}
-.btn-fill:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(139,92,246,.3),inset 0 1px 0 rgba(255,255,255,.15)}
-.btn-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);opacity:0;transition:opacity .3s}
-.btn-fill:hover::after{opacity:1}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);backdrop-filter:blur(8px)}
-.btn-ghost:hover{border-color:rgba(139,92,246,.25);background:rgba(139,92,246,.05);transform:translateY(-2px)}
-
-/* Hero Photo */
-.hero-visual{position:relative;display:flex;justify-content:flex-end}
-.photo-frame{position:relative;width:360px;height:420px}
-.photo-frame img{width:100%;height:100%;object-fit:cover;border-radius:20px;position:relative;z-index:2;filter:contrast(1.05) brightness(1.02)}
-.photo-border{position:absolute;inset:-3px;border-radius:23px;background:conic-gradient(from 180deg,var(--violet),var(--indigo),var(--cyan),var(--violet));z-index:1;opacity:.6;animation:borderShift 8s linear infinite}
-@keyframes borderShift{to{filter:hue-rotate(360deg)}}
-.photo-shadow{position:absolute;bottom:-20px;left:10%;width:80%;height:60px;background:rgba(139,92,246,.15);filter:blur(40px);border-radius:50%;z-index:0}
-.hero-float{position:absolute;z-index:3;background:rgba(12,13,20,.8);backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:12px;padding:10px 16px;font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--text)}
-.hero-float.f1{top:12%;right:-20px;animation:bob 4s ease-in-out infinite}
-.hero-float.f2{bottom:18%;left:-24px;animation:bob 4s ease-in-out 2s infinite}
-.hero-float .tag{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-
-/* --- SOCIAL PROOF BAR --- */
-.proof{padding:56px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.proof::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,92,246,.015),transparent 60%)}
-.proof .wrap{display:flex;justify-content:space-between;align-items:center}
-.proof-item{text-align:center;flex:1}
-.proof-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:var(--text);line-height:1}
-.proof-num span{background:linear-gradient(135deg,var(--text),var(--violet2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.proof-label{font-size:.72rem;color:var(--dim);margin-top:8px;letter-spacing:1px;text-transform:uppercase;font-weight:500}
-.proof-div{width:1px;height:48px;background:var(--border)}
-
-/* --- PROBLEM/AGITATION --- */
-.problem{padding:140px 0 100px;position:relative}
-.problem .wrap{max-width:800px}
-.kicker{font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--violet2);margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.kicker::before{content:'';width:24px;height:1px;background:var(--violet)}
-.problem h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--text);line-height:1.2;margin-bottom:24px}
-.problem p{font-size:1.08rem;color:var(--muted);line-height:1.8;max-width:600px}
-.pain-list{margin-top:40px;display:flex;flex-direction:column;gap:16px}
-.pain-item{display:flex;align-items:flex-start;gap:16px;padding:20px 24px;background:var(--surface);border:1px solid var(--border);border-radius:16px;transition:all .4s}
-.pain-item:hover{border-color:rgba(239,68,68,.15);background:rgba(239,68,68,.03)}
-.pain-icon{width:36px;height:36px;border-radius:10px;background:rgba(239,68,68,.08);display:grid;place-items:center;font-size:16px;flex-shrink:0;border:1px solid rgba(239,68,68,.1)}
-.pain-item h4{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:4px}
-.pain-item p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.6}
-
-/* --- SERVICES --- */
-.services{padding:140px 0;position:relative}
-.services-head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:64px}
-.services-head h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--text);line-height:1.15}
-.services-head p{font-size:.95rem;color:var(--muted);line-height:1.75;align-self:end}
-.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-
-.srv-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 28px;cursor:pointer;transition:all .5s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--violet),transparent);opacity:0;transition:opacity .5s}
-.srv-card:hover{border-color:var(--border2);background:var(--surface2);transform:translateY(-4px)}
-.srv-card:hover::before{opacity:1}
-.srv-card.active{border-color:rgba(139,92,246,.2);background:rgba(139,92,246,.03)}
-
-.srv-num{font-family:'Space Grotesk',sans-serif;font-size:.65rem;font-weight:600;color:var(--dim);letter-spacing:2px;margin-bottom:24px}
-.srv-icon-wrap{width:48px;height:48px;border-radius:14px;background:var(--glow);border:1px solid rgba(139,92,246,.08);display:grid;place-items:center;font-size:22px;margin-bottom:20px;transition:all .4s}
-.srv-card.active .srv-icon-wrap,.srv-card:hover .srv-icon-wrap{background:var(--glow2);border-color:rgba(139,92,246,.15);box-shadow:0 8px 24px rgba(139,92,246,.1)}
-.srv-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
-.srv-card h3 .arr{color:var(--dim);font-size:.8rem;transition:all .3s}
-.srv-card.active h3 .arr{transform:rotate(90deg);color:var(--violet2)}
-.srv-card>p{font-size:.84rem;color:var(--muted);line-height:1.65}
-.srv-expand{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0}
-.srv-card.active .srv-expand{max-height:300px;opacity:1}
-.srv-expand-inner{padding-top:20px;border-top:1px solid var(--border);margin-top:16px}
-.srv-expand-inner p{font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
-.srv-feat{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--text2);margin-bottom:6px}
-.srv-feat::before{content:'✓';color:var(--emerald);font-weight:700;font-size:.7rem}
-
-/* --- PROCESS --- */
-.process{padding:140px 0;background:var(--bg2);position:relative}
-.process::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
-.process-head{text-align:center;max-width:600px;margin:0 auto 72px}
-.process-head h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--text);line-height:1.15;margin-bottom:16px}
-.process-head p{font-size:.95rem;color:var(--muted);line-height:1.7}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
-.steps::before{content:'';position:absolute;top:32px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:1px;background:linear-gradient(90deg,var(--violet),var(--indigo),var(--cyan),var(--violet2));opacity:.2}
-.stp{text-align:center;padding:0 16px;position:relative}
-.stp-ring{width:64px;height:64px;margin:0 auto 28px;position:relative}
-.stp-ring::before{content:'';position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg,var(--violet),var(--indigo),transparent 70%);opacity:.4}
-.stp-ring .num{width:100%;height:100%;border-radius:50%;background:var(--bg2);display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--violet2);position:relative;border:1px solid var(--border2)}
-.stp h3{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:10px}
-.stp p{font-size:.8rem;color:var(--muted);line-height:1.65}
-
-/* --- RESULTS / TESTIMONIALS --- */
-.results{padding:140px 0;position:relative}
-.results-head{margin-bottom:64px}
-.results-head h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--text);line-height:1.15;margin-bottom:16px}
-.results-head p{font-size:.95rem;color:var(--muted);line-height:1.7;max-width:480px}
-.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.testi{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 32px;transition:all .4s;position:relative}
-.testi:hover{border-color:var(--border2);transform:translateY(-3px)}
-.testi:first-child{grid-row:span 2;display:flex;flex-direction:column;justify-content:center}
-.testi-stars{color:var(--violet2);font-size:.7rem;letter-spacing:3px;margin-bottom:20px}
-.testi q{display:block;font-size:.95rem;color:var(--text2);line-height:1.75;margin-bottom:24px;font-style:normal}
-.testi:first-child q{font-family:'Instrument Serif',Georgia,serif;font-size:1.3rem;line-height:1.5;color:var(--text)}
-.testi-who{display:flex;align-items:center;gap:14px}
-.testi-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--indigo));display:grid;place-items:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
-.testi-name{font-size:.85rem;font-weight:600;color:var(--text)}
-.testi-role{font-size:.72rem;color:var(--dim)}
-
-/* --- FAQ --- */
-.faq{padding:140px 0;background:var(--bg2);position:relative}
-.faq::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
-.faq-layout{display:grid;grid-template-columns:.6fr 1fr;gap:80px;align-items:start}
-.faq-left h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2rem,3.5vw,2.6rem);font-weight:400;color:var(--text);line-height:1.2;margin-bottom:16px}
-.faq-left p{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:28px}
-.faq-list{display:flex;flex-direction:column;gap:8px}
-.faq-item{border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;background:var(--surface)}
-.faq-item:hover{border-color:var(--border2)}
-.faq-q{padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.88rem;color:var(--text2);transition:color .3s;gap:16px}
-.faq-q:hover{color:var(--text)}
-.faq-q .plus{width:24px;height:24px;border-radius:8px;background:var(--surface3);display:grid;place-items:center;font-size:.75rem;color:var(--dim);transition:all .3s;flex-shrink:0}
-.faq-item.open .faq-q .plus{background:var(--glow2);color:var(--violet2);transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
-.faq-item.open .faq-a{max-height:200px}
-.faq-a-inner{padding:0 24px 20px}
-.faq-a-inner p{font-size:.84rem;color:var(--muted);line-height:1.75}
-
-/* --- CTA --- */
-.cta{padding:160px 0 100px;position:relative;text-align:center;overflow:hidden}
-.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(139,92,246,.08),transparent 70%);pointer-events:none}
-.cta .wrap{position:relative;z-index:2}
-.cta-box{max-width:680px;margin:0 auto}
-.cta h2{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:400;color:var(--text);line-height:1.15;margin-bottom:20px}
-.cta p{font-size:1rem;color:var(--muted);margin-bottom:40px;line-height:1.7}
-.cta-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
-.cta-note{font-size:.72rem;color:var(--dim);display:flex;align-items:center;justify-content:center;gap:6px}
-
-/* Mini CTA strip */
-.mini-cta{padding:40px 0;background:linear-gradient(135deg,rgba(139,92,246,.06),rgba(99,102,241,.03));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.mini-cta .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.mini-cta p{font-size:.95rem;font-weight:500;color:var(--text2)}
-.mini-cta p strong{color:var(--text);font-weight:600}
-
-/* --- FOOTER --- */
-.footer{padding:48px 0;border-top:1px solid var(--border)}
-.footer .wrap{display:flex;align-items:center;justify-content:space-between}
-.footer-copy{font-size:.78rem;color:var(--dim)}
-.footer-links{display:flex;gap:8px}
-.footer-links a{width:36px;height:36px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;font-size:.9rem;color:var(--muted);transition:all .3s}
-.footer-links a:hover{border-color:var(--border2);color:var(--violet2);transform:translateY(-2px)}
-
-/* --- BACK TOP --- */
-.totop{position:fixed;bottom:28px;right:28px;width:42px;height:42px;border-radius:12px;background:rgba(12,13,20,.8);backdrop-filter:blur(16px);border:1px solid var(--border2);display:grid;place-items:center;color:var(--muted);font-size:.8rem;cursor:pointer;opacity:0;transform:translateY(16px);transition:all .4s;z-index:90}
-.totop.show{opacity:1;transform:translateY(0)}
-.totop:hover{border-color:rgba(139,92,246,.2);color:var(--violet2)}
-
-/* --- REVEAL --- */
-.r{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
-.r.v{opacity:1;transform:translateY(0)}
-.rd1{transition-delay:.08s}.rd2{transition-delay:.16s}.rd3{transition-delay:.24s}.rd4{transition-delay:.32s}.rd5{transition-delay:.4s}.rd6{transition-delay:.48s}
-
-/* --- RESPONSIVE --- */
-@media(max-width:900px){
-.hero .wrap{grid-template-columns:1fr;gap:48px;text-align:center}
-.hero-visual{justify-content:center}
-.hero-sub{margin:0 auto 40px}
-.hero-actions{justify-content:center}
-.hero-float{display:none}
-.photo-frame{width:280px;height:340px}
-.services-head{grid-template-columns:1fr;gap:20px}
-.srv-grid{grid-template-columns:1fr}
-.steps{grid-template-columns:1fr 1fr;gap:40px}
-.steps::before{display:none}
-.testi-grid{grid-template-columns:1fr}
-.testi:first-child{grid-row:auto}
-.faq-layout{grid-template-columns:1fr;gap:40px}
-.proof .wrap{flex-wrap:wrap;gap:24px;justify-content:center}
-.proof-div{display:none}
-.mini-cta .wrap{justify-content:center;text-align:center}
-.footer .wrap{flex-direction:column;gap:16px;text-align:center}
-.nav-menu{display:none}.burger{display:block}
-.pain-list{gap:12px}
-}
-</style>
+<title>Newera — AI Automation Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="loader" id="loader"><div class="loader-bar"><span></span></div><div class="loader-text">Loading</div></div>
-<div class="scroll-line" id="scrollLine"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-
-<!-- NAV -->
-<nav class="nav" id="nav">
-<div class="nav-inner">
-  <a href="#" class="logo"><div class="logo-mark">⚡</div>Newera</a>
-  <ul class="nav-menu">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#results">Results</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="https://calendly.com/newera7078/30min" target="_blank" class="nav-btn">Book a Call</a></li>
-  </ul>
-  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+<div id="intro">
+  <div class="i-logo">New<em>era</em></div>
+  <div class="i-bar" id="ibar"></div>
+  <div class="i-txt">INITIALIZING AI SYSTEMS</div>
 </div>
+
+<div class="scan"></div>
+<div id="prog"></div>
+<canvas id="bg"></canvas>
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- Ambient glow blobs -->
+<div class="ambient a1"></div>
+<div class="ambient a2"></div>
+
+<!-- 3D depth lines -->
+<div class="depth-line dl1"></div>
+<div class="depth-line dl2"></div>
+<div class="depth-line dl3"></div>
+
+<nav>
+  <div class="logo">New<em>era</em></div>
+  <ul class="nl">
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Process</a></li>
+  </ul>
+  <a href="https://calendly.com/newera7078/30min" class="ncta" target="_blank">Book a Call</a>
 </nav>
-<div class="mob-nav" id="mobNav">
-  <a href="#services" onclick="closeMob()">Services</a>
-  <a href="#process" onclick="closeMob()">Process</a>
-  <a href="#results" onclick="closeMob()">Results</a>
-  <a href="#faq" onclick="closeMob()">FAQ</a>
-  <a href="https://calendly.com/newera7078/30min" target="_blank" class="btn btn-fill" onclick="closeMob()">Book a Call</a>
+
+<div id="dm">
+  <div class="dd on"></div>
+  <div class="dd"></div>
+  <div class="dd"></div>
+  <div class="dd"></div>
+  <div class="dd"></div>
+  <div class="dd"></div>
+  <div class="dd"></div>
+  <div class="dd"></div>
 </div>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-grid"></div>
-  <div class="hero-glow1"></div>
-  <div class="hero-glow2"></div>
-  <div class="wrap">
-    <div class="hero-text">
-      <div class="hero-overline r"><span class="dot"></span> Available for new projects</div>
-      <h1 class="r rd1">We build <em>AI systems</em> that run your business while you sleep</h1>
-      <p class="hero-sub r rd2">AI-powered lead capture, automated booking, and intelligent follow-ups — built in 48 hours, working 24/7.</p>
-      <div class="hero-actions r rd3">
-        <a href="https://calendly.com/newera7078/30min" target="_blank" class="btn btn-fill">Book Free Call <span>→</span></a>
-        <a href="https://instagram.com/newera.agent45" target="_blank" class="btn btn-ghost">See Our Work</a>
+<section class="scene" id="sh">
+  <div class="scene-3d">
+    <div class="h-badge el">AI Automation Agency · Est. 2024</div>
+    <h1 class="h-title el">
+      <div class="ln"><span>We Build</span></div>
+      <div class="ln"><span><span class="acc">Machines</span> That</span></div>
+      <div class="ln"><span>Never <span class="acc">Sleep.</span></span></div>
+    </h1>
+    <p class="h-sub el">AI-powered lead capture, automated booking, intelligent follow-ups — built in 48 hours, working 24/7.</p>
+    <div class="h-act el">
+      <a href="https://calendly.com/newera7078/30min" class="btn-p" target="_blank">Book a Strategy Call →</a>
+      <a href="https://instagram.com/newera.agent45" class="btn-g" target="_blank">See Our Work ↗</a>
+    </div>
+    <div class="h-live el">
+      <span class="live-dot"></span>
+      <span class="live-txt">LIVE</span>
+      <span class="live-stat">$12,400 in pipeline added</span>
+      <span class="live-sep">·</span>
+      <span class="live-stat">8 automations fired today</span>
+    </div>
+    <div class="s-hint el">SCROLL TO EXPLORE</div>
+    <div class="h-photo el">
+      <div class="fi"><div class="fi-ph">K</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="scene" id="sp">
+  <div class="scene-3d">
+    <div class="slabel el">The Problem</div>
+    <h2 class="p-title el">Your business leaks revenue.<br>Every. Single. Day.</h2>
+    <div class="p-grid">
+      <div class="p-card el">
+        <span class="p-icon">⏳</span>
+        <h3>Slow Response</h3>
+        <p>67% of leads go to the first responder. Take hours — they're already gone.</p>
+      </div>
+      <div class="p-card el">
+        <span class="p-icon">📉</span>
+        <h3>After-Hours Loss</h3>
+        <p>Visitors don't wait till morning. They move to whoever responds instantly.</p>
+      </div>
+      <div class="p-card el">
+        <span class="p-icon">🔄</span>
+        <h3>Manual Chaos</h3>
+        <p>Spreadsheets, sticky notes, forgotten callbacks. Your pipeline has holes.</p>
       </div>
     </div>
-    <div class="hero-visual r rd2">
-      <div class="photo-frame">
-        <div class="photo-border"></div>
-        <img src="krishna.jpg.png" alt="Krishna — Founder, Newera" loading="eager">
-        <div class="photo-shadow"></div>
-      </div>
-      <div class="hero-float f1"><span class="tag" style="background:var(--emerald)"></span> Available Now</div>
-      <div class="hero-float f2"><span class="tag" style="background:var(--violet)"></span> AI Powered</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="scene" id="svc">
+  <div class="scene-3d" style="width:100%">
+    <div class="svc-h el">
+      <div class="slabel">What We Build</div>
+      <h2 class="svc-title">Automation That<br>Closes Deals</h2>
+    </div>
+    <div class="bento">
+      <div class="bc lg el" data-icon="🤖" data-title="AI Chatbot & Lead Capture" data-desc="Our AI chatbot engages every visitor in real-time conversation, qualifies their needs, captures contact details, and syncs everything to your CRM — even at 3am. It learns from your business data to give accurate, human-like responses." data-features='["24/7 real-time visitor engagement","Auto-qualifies leads based on your criteria","Syncs to CRM (HubSpot, GoHighLevel, etc.)","Trained on your exact business data","Multi-language support"]'><span class="bn">01</span><span class="bi">🤖</span><h3>AI Chatbot & Lead Capture</h3><p>24/7 conversational AI that qualifies every lead, captures details, and syncs to your CRM — even at 3am.</p></div>
+      <div class="bc el" data-icon="🎯" data-title="AI Lead Scoring & Outreach" data-desc="Our ML algorithms automatically score every incoming lead as Hot, Warm, or Cold in real-time. High-value leads get instant Slack alerts and personalized outreach via email, SMS, and voice." data-features='["Real-time lead scoring (Hot/Warm/Cold)","Instant Slack & email alerts for hot leads","Personalized multi-channel outreach","Behavior-based segmentation","A/B tested messaging"]'><span class="bn">02</span><span class="bi">🎯</span><h3>AI Lead Scoring & Outreach</h3><p>Score and segment prospects then reach them with personalized email, SMS, and voice.</p></div>
+      <div class="bc el" data-icon="📅" data-title="Smart Booking System" data-desc="Only qualified leads get access to your calendar. The system auto-schedules based on availability, sends confirmations, reminders, and handles rescheduling — zero human effort required." data-features='["Calendar sync (Google, Outlook, Calendly)","Auto-qualification before booking","SMS & email reminders","One-click rescheduling","No-show follow-up automation"]'><span class="bn">03</span><span class="bi">📅</span><h3>Smart Booking System</h3><p>Auto-schedule meetings based on your live calendar. Zero back-and-forth emails.</p></div>
+      <div class="bc el" data-icon="📧" data-title="Follow-Up Automation" data-desc="Multi-channel sequences triggered by user behavior. Email, WhatsApp, SMS — all running on autopilot. Feels personal to the recipient, but requires zero manual effort from your team." data-features='["Behavior-triggered sequences","Email + WhatsApp + SMS channels","Personalized at scale","Smart send-time optimization","Auto-stop on reply"]'><span class="bn">04</span><span class="bi">📧</span><h3>Follow-Up Automation</h3><p>Multi-channel sequences that keep nurturing cold leads on autopilot.</p></div>
+      <div class="bc el" data-icon="📊" data-title="Analytics Dashboard" data-desc="See your entire pipeline in real-time. Track conversion funnels, automation health, and revenue impact. Get weekly AI-generated reports with actionable insights delivered to your inbox." data-features='["Real-time pipeline dashboard","Conversion funnel visualization","Weekly AI-generated reports","ROI tracking per automation","Custom KPI alerts"]'><span class="bn">05</span><span class="bi">📊</span><h3>Analytics Dashboard</h3><p>Live pipeline visibility, automation health, and revenue impact — in one view.</p></div>
+      <div class="bc el" data-icon="⚡" data-title="Custom AI Automation" data-desc="500+ integrations available. If a task is repetitive in your business, we automate it with custom AI logic. Every workflow is built specifically for your operations — nothing off the shelf." data-features='["500+ tool integrations","Custom AI logic per workflow","Built for your exact business","Scalable architecture","Ongoing optimization & support"]'><span class="bn">06</span><span class="bi">⚡</span><h3>Custom AI Automation</h3><p>Bespoke workflows built exactly for your business. Nothing off the shelf.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="scene" id="st">
+  <div class="scene-3d" style="width:100%">
+    <div class="slabel el" style="margin-bottom:44px">By The Numbers</div>
+    <div class="sg">
+      <div class="si el"><span class="sn" data-target="48" data-suf="H">0H</span><span class="sl">Delivery</span></div>
+      <div class="si el"><span class="sn" data-target="500" data-suf="+">0+</span><span class="sl">Tools Integrated</span></div>
+      <div class="si el"><span class="sn" data-target="24" data-suf="/7">0/7</span><span class="sl">Uptime</span></div>
+      <div class="si el"><span class="sn" data-target="3" data-suf="x">0x</span><span class="sl">Lead Growth</span></div>
     </div>
   </div>
 </section>
 
 <!-- PROOF -->
-<div class="proof">
-<div class="wrap">
-  <div class="proof-item r"><div class="proof-num"><span class="ctr" data-to="24">0</span>/7</div><div class="proof-label">Always Online</div></div>
-  <div class="proof-div"></div>
-  <div class="proof-item r rd1"><div class="proof-num"><span class="ctr" data-to="10">0</span>x</div><div class="proof-label">Lead Growth</div></div>
-  <div class="proof-div"></div>
-  <div class="proof-item r rd2"><div class="proof-num"><span class="ctr" data-to="48">0</span>h</div><div class="proof-label">Setup Time</div></div>
-  <div class="proof-div"></div>
-  <div class="proof-item r rd3"><div class="proof-num"><span>₹0</span></div><div class="proof-label">Missed Leads</div></div>
-</div>
-</div>
-
-<!-- PROBLEM -->
-<section class="problem">
-<div class="wrap">
-  <div class="kicker r">The Problem</div>
-  <h2 class="r rd1">Your business is leaking revenue<br>every single day</h2>
-  <p class="r rd2">While you're sleeping, leads are visiting your site, asking questions, and leaving — forever. Here's what's really happening:</p>
-  <div class="pain-list">
-    <div class="pain-item r rd2"><div class="pain-icon">⏳</div><div><h4>Slow Response Times</h4><p>67% of leads go to the first responder. If you take hours, they're already gone.</p></div></div>
-    <div class="pain-item r rd3"><div class="pain-icon">📉</div><div><h4>Lost After-Hours Leads</h4><p>Visitors don't wait until morning. They move to your competitor who responds instantly.</p></div></div>
-    <div class="pain-item r rd4"><div class="pain-icon">🔄</div><div><h4>Manual Follow-Up Chaos</h4><p>Spreadsheets, sticky notes, forgotten callbacks — your pipeline is full of holes.</p></div></div>
+<section class="scene" id="prf">
+  <div class="scene-3d">
+    <div class="slabel el">Proof</div>
+    <h2 class="prf-title el">Built. Shipped. Working.</h2>
+    <div class="mq-w el">
+      <div class="mq-i">
+        <span class="mq-t">n8n</span><span class="mq-t">OpenAI</span>
+        <span class="mq-t">Twilio</span><span class="mq-t">Google Sheets</span>
+        <span class="mq-t">WhatsApp API</span><span class="mq-t">Slack</span>
+        <span class="mq-t">Calendly</span><span class="mq-t">Apollo.io</span>
+        <span class="mq-t">Anthropic</span><span class="mq-t">Make.com</span>
+        <span class="mq-t">n8n</span><span class="mq-t">OpenAI</span>
+        <span class="mq-t">Twilio</span><span class="mq-t">Google Sheets</span>
+        <span class="mq-t">WhatsApp API</span><span class="mq-t">Slack</span>
+        <span class="mq-t">Calendly</span><span class="mq-t">Apollo.io</span>
+        <span class="mq-t">Anthropic</span><span class="mq-t">Make.com</span>
+      </div>
+    </div>
+    <div class="cc el" id="tcard">
+      <span class="ctag">● Featured Build</span>
+      <h3 class="ctitle">Missed Call → Auto Follow-Up System</h3>
+      <p class="csub">After-hours AI response that closes while you sleep</p>
+      <div class="cms">
+        <div class="cm"><span>0</span><span>Leads Lost After Hours</span></div>
+        <div class="cm"><span>48H</span><span>Build Time</span></div>
+        <div class="cm"><span>3x</span><span>Response Rate Increase</span></div>
+      </div>
+    </div>
   </div>
-</div>
 </section>
 
-<!-- MINI CTA -->
-<div class="mini-cta">
-<div class="wrap">
-  <p><strong>Stop losing leads.</strong> Let AI handle it 24/7 — perfectly, every time.</p>
-  <a href="https://calendly.com/newera7078/30min" target="_blank" class="btn btn-fill" style="padding:12px 28px;font-size:.85rem">Get Started →</a>
-</div>
-</div>
-
-<!-- SERVICES -->
-<section class="services" id="services">
-<div class="wrap">
-  <div class="services-head">
-    <div class="r"><div class="kicker">What We Build</div><h2>AI solutions engineered<br>for growth</h2></div>
-    <p class="r rd1">Every system is custom-built for your business. No templates, no cookie-cutters. Click to explore each service.</p>
-  </div>
-  <div class="srv-grid">
-    <div class="srv-card r rd1" onclick="toggleSrv(this)">
-      <div class="srv-num">01</div>
-      <div class="srv-icon-wrap">🤖</div>
-      <h3>AI Sales Chatbot <span class="arr">→</span></h3>
-      <p>24/7 AI that talks to visitors, understands needs, and books calls automatically.</p>
-      <div class="srv-expand"><div class="srv-expand-inner">
-        <p>Your AI assistant qualifies every visitor with natural conversation, scores them, and routes hot leads to your calendar — all without human input.</p>
-        <div class="srv-feat">Trained on your business data</div>
-        <div class="srv-feat">Natural language conversations</div>
-        <div class="srv-feat">Instant lead qualification</div>
-      </div></div>
-    </div>
-    <div class="srv-card r rd2" onclick="toggleSrv(this)">
-      <div class="srv-num">02</div>
-      <div class="srv-icon-wrap">🎯</div>
-      <h3>Lead Scoring Engine <span class="arr">→</span></h3>
-      <p>AI analyzes every lead, assigns quality scores, and alerts you for hot prospects.</p>
-      <div class="srv-expand"><div class="srv-expand-inner">
-        <p>Machine learning algorithms analyze behavior patterns, engagement levels, and intent signals to score every lead in real-time.</p>
-        <div class="srv-feat">Hot / Warm / Cold categorization</div>
-        <div class="srv-feat">Real-time Slack & email alerts</div>
-        <div class="srv-feat">CRM auto-enrichment</div>
-      </div></div>
-    </div>
-    <div class="srv-card r rd3" onclick="toggleSrv(this)">
-      <div class="srv-num">03</div>
-      <div class="srv-icon-wrap">📅</div>
-      <h3>Smart Booking System <span class="arr">→</span></h3>
-      <p>Qualified leads book directly on your calendar. Zero back-and-forth needed.</p>
-      <div class="srv-expand"><div class="srv-expand-inner">
-        <p>Integrates with Google Calendar, Calendly, or your existing tools. Only qualified leads get access to your time slots.</p>
-        <div class="srv-feat">Automated calendar sync</div>
-        <div class="srv-feat">Smart availability management</div>
-        <div class="srv-feat">Confirmation & reminder emails</div>
-      </div></div>
-    </div>
-    <div class="srv-card r rd4" onclick="toggleSrv(this)">
-      <div class="srv-num">04</div>
-      <div class="srv-icon-wrap">📧</div>
-      <h3>Follow-Up Automation <span class="arr">→</span></h3>
-      <p>Personalized follow-up sequences sent automatically. Never lose a prospect.</p>
-      <div class="srv-expand"><div class="srv-expand-inner">
-        <p>Multi-step email & WhatsApp sequences triggered by lead behavior. Each message feels personal, not automated.</p>
-        <div class="srv-feat">Behavior-triggered sequences</div>
-        <div class="srv-feat">Personalized messaging at scale</div>
-        <div class="srv-feat">A/B testing built-in</div>
-      </div></div>
-    </div>
-    <div class="srv-card r rd5" onclick="toggleSrv(this)">
-      <div class="srv-num">05</div>
-      <div class="srv-icon-wrap">📊</div>
-      <h3>Analytics Dashboard <span class="arr">→</span></h3>
-      <p>All leads, scores, and interactions in one clean, real-time dashboard.</p>
-      <div class="srv-expand"><div class="srv-expand-inner">
-        <p>Custom-built dashboard that shows conversion rates, lead sources, and pipeline health — updated in real-time.</p>
-        <div class="srv-feat">Real-time data visualization</div>
-        <div class="srv-feat">Conversion funnel tracking</div>
-        <div class="srv-feat">Weekly AI-generated reports</div>
-      </div></div>
-    </div>
-    <div class="srv-card r rd6" onclick="toggleSrv(this)">
-      <div class="srv-num">06</div>
-      <div class="srv-icon-wrap">⚡</div>
-      <h3>Custom AI Workflows <span class="arr">→</span></h3>
-      <p>Got a repetitive task? We build custom AI workflows to eliminate it.</p>
-      <div class="srv-expand"><div class="srv-expand-inner">
-        <p>From data entry to customer onboarding — if it can be systematized, we can automate it with AI.</p>
-        <div class="srv-feat">500+ tool integrations</div>
-        <div class="srv-feat">Custom logic & conditions</div>
-        <div class="srv-feat">Scalable architecture</div>
-      </div></div>
+<!-- REVIEWS -->
+<section class="scene" id="rev">
+  <div class="scene-3d">
+    <div class="slabel el">What Clients Say</div>
+    <h2 class="prf-title el">Results That Speak.</h2>
+    <div class="rev-grid">
+      <div class="rev-card el">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Our lead response went from 6 hours to under 60 seconds. We closed 3 extra deals in the first week alone."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">R</div>
+          <div class="rev-info"><span>Rajesh Mehta</span><span>Real Estate · Mumbai</span></div>
+        </div>
+      </div>
+      <div class="rev-card el">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Krishna built our entire follow-up system in 2 days. We haven't missed a single lead since. The ROI is insane."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">S</div>
+          <div class="rev-info"><span>Dr. Sneha Patel</span><span>Dental Clinic · Ahmedabad</span></div>
+        </div>
+      </div>
+      <div class="rev-card el">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Best investment we made this year. The AI chatbot handles 80% of inquiries automatically. Our team focuses on closing."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">A</div>
+          <div class="rev-info"><span>Amit Sharma</span><span>Coaching Institute · Delhi</span></div>
+        </div>
+      </div>
+      <div class="rev-card el">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"We integrated Newera's AI chatbot into our clinic website. Patient inquiries are now handled instantly, 24/7. Bookings increased by 40% in the first month."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">J</div>
+          <div class="rev-info"><span>James Mitchell</span><span>Healthcare · London, UK</span></div>
+        </div>
+      </div>
+      <div class="rev-card el">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"The automation pipeline Krishna built saved our team 20+ hours per week. Leads never fall through the cracks anymore. Worth every penny."</p>
+        <div class="rev-author">
+          <div class="rev-avatar">M</div>
+          <div class="rev-info"><span>Maria Santos</span><span>Real Estate · Miami, USA</span></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </section>
 
-<!-- PROCESS -->
-<section class="process" id="process">
-<div class="wrap">
-  <div class="process-head r">
-    <div class="kicker" style="justify-content:center">How It Works</div>
-    <h2>From zero to automated<br>in 48 hours</h2>
-    <p>No tech knowledge required. We handle everything.</p>
-  </div>
-  <div class="steps">
-    <div class="stp r rd1"><div class="stp-ring"><div class="num">01</div></div><h3>Discovery</h3><p>15-min call to map your business and find the biggest bottlenecks</p></div>
-    <div class="stp r rd2"><div class="stp-ring"><div class="num">02</div></div><h3>Build</h3><p>We architect and build your custom AI system from scratch</p></div>
-    <div class="stp r rd3"><div class="stp-ring"><div class="num">03</div></div><h3>Deploy</h3><p>We launch, test end-to-end, and hand you the keys</p></div>
-    <div class="stp r rd4"><div class="stp-ring"><div class="num">04</div></div><h3>Optimize</h3><p>Ongoing support and AI fine-tuning for peak performance</p></div>
-  </div>
-</div>
-</section>
-
-<!-- RESULTS -->
-<section class="results" id="results">
-<div class="wrap">
-  <div class="results-head r">
-    <div class="kicker">Results</div>
-    <h2>What our clients say</h2>
-    <p>Real feedback from businesses that chose to automate with Newera.</p>
-  </div>
-  <div class="testi-grid">
-    <div class="testi r rd1">
-      <div class="testi-stars">★ ★ ★ ★ ★</div>
-      <q>Newera completely transformed how we handle leads. Our AI chatbot handles 80% of inquiries and our booking rate tripled in the first month. This isn't just automation — it's a competitive advantage.</q>
-      <div class="testi-who"><div class="testi-av">R</div><div><div class="testi-name">Rahul Mehta</div><div class="testi-role">E-commerce Founder, India</div></div></div>
-    </div>
-    <div class="testi r rd2">
-      <div class="testi-stars">★ ★ ★ ★ ★</div>
-      <q>Went from manually tracking leads in Excel to a fully automated pipeline. Absolute game changer for our sales team.</q>
-      <div class="testi-who"><div class="testi-av">S</div><div><div class="testi-name">Sarah Johnson</div><div class="testi-role">Agency Owner, UK</div></div></div>
-    </div>
-    <div class="testi r rd3">
-      <div class="testi-stars">★ ★ ★ ★ ★</div>
-      <q>The follow-up system paid for itself in week one. We're booking 3x more calls now — and I didn't write a single line of code.</q>
-      <div class="testi-who"><div class="testi-av">A</div><div><div class="testi-name">Amit Patel</div><div class="testi-role">Real Estate Consultant</div></div></div>
+<!-- FOUNDER -->
+<section class="scene" id="fnd">
+  <div class="scene-3d fnd-layout">
+    <div class="fr el">
+      <div class="slabel">The Builder</div>
+      <h2 class="fn">Built by someone<br>who ships fast.</h2>
+      <p class="fbio">I started <strong>Newera</strong> because I was tired of watching businesses lose leads to slow response times and clunky manual processes. <em class="acc">AI isn't the future — it's happening right now.</em> I build systems that make you money while you're asleep.</p>
+      <ul class="fps">
+        <li>n8n, OpenAI, Anthropic API — hands-on, daily</li>
+        <li>Specializes in Real Estate, Clinics & Coaching</li>
+        <li>Follow the build → @newera.agent45</li>
+      </ul>
     </div>
   </div>
-</div>
-</section>
-
-<!-- FAQ -->
-<section class="faq" id="faq">
-<div class="wrap">
-  <div class="faq-layout">
-    <div class="faq-left r">
-      <div class="kicker">FAQ</div>
-      <h2>Common questions, clear answers</h2>
-      <p>Everything you need to know before we start building your AI system.</p>
-      <a href="mailto:newera7078@gmail.com" class="btn btn-ghost" style="font-size:.85rem;padding:12px 24px">Have more questions? Email us</a>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item r rd1"><div class="faq-q" onclick="toggleFaq(this)">How long does setup take? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner"><p>Most systems go live within 48 hours. Complex multi-step workflows may take 3-5 days depending on integrations needed.</p></div></div></div>
-      <div class="faq-item r rd2"><div class="faq-q" onclick="toggleFaq(this)">Do I need any technical knowledge? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner"><p>Not at all. We handle everything — building, testing, deploying. You just tell us about your business and we do the rest.</p></div></div></div>
-      <div class="faq-item r rd3"><div class="faq-q" onclick="toggleFaq(this)">What if I'm not happy with the result? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner"><p>We offer unlimited revisions. We keep iterating until the system delivers the exact results you're looking for.</p></div></div></div>
-      <div class="faq-item r rd4"><div class="faq-q" onclick="toggleFaq(this)">How much does it cost? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner"><p>Pricing depends on complexity. Book a free call and we'll give you a transparent quote — no hidden fees, no pressure.</p></div></div></div>
-      <div class="faq-item r rd5"><div class="faq-q" onclick="toggleFaq(this)">Can it integrate with my existing tools? <span class="plus">+</span></div><div class="faq-a"><div class="faq-a-inner"><p>Yes — CRMs, calendars, email, WhatsApp, Slack, Google Sheets, and 500+ other tools via APIs and automation platforms.</p></div></div></div>
-    </div>
-  </div>
-</div>
 </section>
 
 <!-- CTA -->
-<section class="cta" id="cta">
-  <div class="cta-glow"></div>
-  <div class="wrap">
-    <div class="cta-box r">
-      <div class="kicker" style="justify-content:center">Let's Talk</div>
-      <h2>Ready to stop losing leads and start growing on autopilot?</h2>
-      <p>Book a free 15-minute discovery call. No pitch decks, no pressure — just an honest conversation about what AI can do for your business.</p>
-      <div class="cta-actions">
-        <a href="https://calendly.com/newera7078/30min" target="_blank" class="btn btn-fill">Book Free Discovery Call →</a>
-        <a href="mailto:newera7078@gmail.com" class="btn btn-ghost">📧 Email Us</a>
-      </div>
-      <div class="cta-note">🔒 Free consultation · No obligations · Takes 2 minutes</div>
+<section class="scene" id="cta">
+  <div class="scene-3d cta-center">
+    <div class="cta-lbl el">Ready to automate?</div>
+    <h2 class="cta-t el">
+      <span class="glt" data-t="LET'S">LET'S</span><br>
+      <span class="glt acc" data-t="BUILD.">BUILD.</span>
+    </h2>
+    <p class="cta-sub el">Free 15-min call · No pitch decks · Just results</p>
+    <a href="https://calendly.com/newera7078/30min" class="btn-p el" target="_blank">Book Free Discovery Call →</a>
+    <div class="cta-ftr el">
+      <a href="mailto:newera7078@gmail.com">newera7078@gmail.com</a>
+      <a href="https://instagram.com/newera.agent45" target="_blank">@newera.agent45</a>
+      <span class="copy">© 2025 NEWERA AI</span>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-<div class="wrap">
-  <div class="footer-copy">© 2026 Newera AI · Built by Krishna</div>
-  <div class="footer-links">
-    <a href="https://instagram.com/newera.agent45" target="_blank">📱</a>
-    <a href="mailto:newera7078@gmail.com">📧</a>
+<div id="ss"></div>
+
+<!-- CARD DETAIL MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <span class="modal-icon" id="modalIcon"></span>
+    <h3 class="modal-title" id="modalTitle"></h3>
+    <p class="modal-desc" id="modalDesc"></p>
+    <ul class="modal-features" id="modalFeatures"></ul>
   </div>
 </div>
-</footer>
 
-<button class="totop" id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-<script>
-// Loader
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('done'),1000));
-
-// Scroll handlers
-const nav=document.getElementById('nav'),sl=document.getElementById('scrollLine'),tt=document.getElementById('totop');
-window.addEventListener('scroll',()=>{
-  const d=document.documentElement,p=(d.scrollTop/(d.scrollHeight-d.clientHeight))*100;
-  sl.style.width=p+'%';
-  nav.classList.toggle('scrolled',scrollY>60);
-  tt.classList.toggle('show',scrollY>600);
-},{passive:true});
-
-// Cursor
-document.addEventListener('mousemove',e=>{const c=document.getElementById('cursorDot');c.style.left=e.clientX+'px';c.style.top=e.clientY+'px'});
-
-// Mobile nav
-const burger=document.getElementById('burger'),mobNav=document.getElementById('mobNav');
-burger.addEventListener('click',()=>{burger.classList.toggle('open');mobNav.classList.toggle('open')});
-function closeMob(){burger.classList.remove('open');mobNav.classList.remove('open')}
-
-// Reveal
-const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.r').forEach(el=>ro.observe(el));
-
-// Counters
-const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const t=+e.target.dataset.to;let c=0;const s=Math.max(1,Math.floor(t/35));const i=setInterval(()=>{c+=s;if(c>=t){e.target.textContent=t;clearInterval(i)}else e.target.textContent=c},25);co.unobserve(e.target)}})},{threshold:.5});
-document.querySelectorAll('.ctr').forEach(el=>co.observe(el));
-
-// Service card toggle
-function toggleSrv(card){
-  const wasActive=card.classList.contains('active');
-  document.querySelectorAll('.srv-card').forEach(c=>c.classList.remove('active'));
-  if(!wasActive)card.classList.add('active');
-}
-
-// FAQ toggle
-function toggleFaq(el){
-  const item=el.parentElement,wasOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-  if(!wasOpen)item.classList.add('open');
-}
-</script>
+<script src="main.js"></script>
 </body>
 </html>
